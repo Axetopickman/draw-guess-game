@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>你画我猜</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="toast" class="toast hidden"></div>
+
+  <main id="homePage" class="page center-page">
+    <section class="card hero-card">
+      <h1>你画我猜</h1>
+      <p>手机和电脑都可以打开的多人网页游戏</p>
+      <button id="modeBtn" class="primary big-btn">多人回合制</button>
+    </section>
+  </main>
+
+  <main id="namePage" class="page center-page hidden">
+    <section class="card form-card">
+      <h2>给自吉儿起一个好挺的名儿八！</h2>
+      <input id="nameInput" maxlength="12" placeholder="输入你的名字" autocomplete="off" />
+      <button id="nameConfirmBtn" class="primary">确定</button>
+      <button class="ghost backHomeBtn">返回首页</button>
+    </section>
+  </main>
+
+  <main id="roomPage" class="page center-page hidden">
+    <section class="card form-card">
+      <h2>选择房间号加入</h2>
+      <p class="sub-text">输入相同房间号的玩家会进入同一个房间。房间不存在时会自动创建。</p>
+      <input id="roomInput" maxlength="12" placeholder="例如：8888" autocomplete="off" />
+      <button id="joinRoomBtn" class="primary">加入</button>
+      <button id="backNameBtn" class="ghost">返回改名</button>
+    </section>
+  </main>
+
+  <main id="lobbyPage" class="page hidden">
+    <section class="top-bar">
+      <div>
+        <h2>房间号：<span id="lobbyRoomCode">-</span></h2>
+        <p id="lobbyTip">等待玩家加入，最多 6 人。</p>
+      </div>
+      <button id="copyRoomBtn" class="ghost">复制房间号</button>
+    </section>
+
+    <section id="lobbySlots" class="slots-grid"></section>
+
+    <section class="card lobby-actions">
+      <button id="toggleReadyBtn" class="primary">准备就绪</button>
+      <button id="hostRoundSetupBtn" class="secondary" disabled>房主准备就绪，进入轮数设置</button>
+      <p id="hostStartTip" class="sub-text"></p>
+    </section>
+  </main>
+
+  <main id="roundPage" class="page center-page hidden">
+    <section class="card form-card">
+      <h2>选择你需要进行的轮数</h2>
+      <p id="roundHelp" class="sub-text"></p>
+      <input id="roundInput" type="number" min="1" value="1" />
+      <button id="startGameBtn" class="primary">确定</button>
+      <p id="roundWaitText" class="sub-text hidden">等待房主输入轮数并开始游戏……</p>
+    </section>
+  </main>
+
+  <main id="gamePage" class="page game-page hidden">
+    <section class="game-header card">
+      <div>
+        <strong id="phaseText">准备中</strong>
+        <span id="timerText">--</span>
+      </div>
+      <div id="wordBox">词条：-- | 提示：--</div>
+    </section>
+
+    <section class="toolbar card">
+      <h3>绘画工具</h3>
+      <label>颜色</label>
+      <div id="colorPalette" class="palette"></div>
+      <label for="brushSize">画笔</label>
+      <input id="brushSize" type="range" min="2" max="36" value="6" />
+      <button id="penBtn" class="tool active">画笔</button>
+      <button id="eraserBtn" class="tool">橡皮</button>
+      <button id="undoBtn" class="tool">画笔撤回</button>
+    </section>
+
+    <section class="canvas-wrap card">
+      <canvas id="drawCanvas"></canvas>
+      <div id="canvasLock" class="canvas-lock hidden">现在不能绘画</div>
+      <div id="resultOverlay" class="result-overlay hidden"></div>
+    </section>
+
+    <section class="chat card">
+      <h3>聊天 / 抢答</h3>
+      <div id="chatMessages" class="chat-messages"></div>
+      <form id="chatForm" class="chat-form">
+        <input id="chatInput" maxlength="80" placeholder="输入答案或聊天内容" autocomplete="off" />
+        <button class="primary" type="submit">发送</button>
+      </form>
+    </section>
+
+    <section id="gamePlayers" class="game-players"></section>
+  </main>
+
+  <main id="overPage" class="page center-page hidden">
+    <section class="card form-card">
+      <h2>游戏结束</h2>
+      <div id="rankingBox" class="ranking"></div>
+      <button id="backLobbyBtn" class="primary hidden">回到房间大厅</button>
+      <button id="newGameBtn" class="ghost">返回首页</button>
+    </section>
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="client.js"></script>
+</body>
+</html>
